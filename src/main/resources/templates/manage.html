@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>top page</title>
+<title>管理画面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -35,6 +35,11 @@
 		  	</tr>
 	</table>
 	<button type="submit" name="updateProductCount">商品数更新</button>
+    </form>
+    <br>
+    <br>
+    <form th:action="@{/manage}" method="get">
+    	<button type="submit">更新</button>
     </form>
 </body>
 </html>

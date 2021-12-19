@@ -71,6 +71,8 @@ public class VendingController {
 			result.setResult(false);
 			result.setResultMessage("投入金額が不足しています。");
 			
+			result.setReturnChange(pruductForm.getChangeInfo());
+			
 			// 自販機の今の商品、状態を取得する処理
 			List<VendingProduct> productList = vendingService.getProductList();
 	        model.addAttribute("productList",productList);

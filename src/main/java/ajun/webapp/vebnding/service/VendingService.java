@@ -168,6 +168,7 @@ public class VendingService {
 		} else {
 			result.setResult(false);
 			result.setResultMessage("お釣りが不足しています。管理者に連絡してください。");
+			result.setReturnChange(sumChangeInfo);
 		}
 	}
 	

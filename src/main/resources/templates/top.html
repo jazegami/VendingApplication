@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>top page</title>
+<title>自販機画面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -38,7 +38,7 @@
 		  <tr>
 		    <td align="center">
 		  	  <button type="submit" name="productId" th:value="${product.id}"  th:if="${product.stockCount} == 0" disabled>品切れ</button>
-		  	  <button type="submit" name="productId" th:value="${product.id}"  th:if="${product.stockCount} != 0">PUSH</button>
+			  <button type="submit" name="productId" th:value="${product.id}"  th:if="${product.stockCount} != 0">PUSH</button>
 		    </td>
 		  </tr>
 	    </table>
@@ -60,6 +60,11 @@
     <p th:text="|　　　　50円玉 = ${result.returnChange.fiftyCoin}枚|"></p>
     <p th:text="|　　　　100円玉 = ${result.returnChange.oneHundredCoin}枚|"></p>
     <p th:text="|　　　　500円玉 = ${result.returnChange.fiveHundredCoin}枚|"></p>
+    <p th:text="|　　　　1000円札 = ${result.returnChange.oneThousandBill}枚|"></p>
+    <br>
+    <form th:action="@{/}" method="get">
+    	<button type="submit">更新</button>
+    </form>
 <script>
 function calcSum() {
   var elem = document.getElementById('sum');
