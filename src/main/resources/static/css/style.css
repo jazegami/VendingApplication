@@ -1,0 +1,19 @@
+@charset "Shift_Jis";
+
+.flex {
+    display: flex;
+}
+.image-resize {
+  	max-width: 180px;
+  	max-height: 180px;
+  	-ms-interpolation-mode: bicubic;
+}
+.sumDisplay {
+	font-size: 20px;
+}
+p.red {
+	color: #FF0000;
+}
+input {
+	font-size: 40px;
+}

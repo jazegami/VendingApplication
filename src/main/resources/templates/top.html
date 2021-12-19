@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>top page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<form th:action="@{/buy}" th:object="${buyProductForm}" method="post">
+	<table class="money-area">
+      <tr>
+      	<th><label for="name10">10円</label></th>
+      	<th><label for="name50">50円</label></th>
+      	<th><label for="name100">100円</label></th>
+      	<th><label for="name500">500円</label></th>
+      	<th><label for="name1000">1000円</label></th>
+      </tr>
+      <tr>
+      	<td><input id="10yen" class="money-10" type="number" value="0" th:field="*{changeInfo.tenCoin}" onChange="calcSum()"></td>
+      	<td><input id="50yen" class="money-50" type="number" value="0" th:field="*{changeInfo.fiftyCoin}" onChange="calcSum()"></td>
+      	<td><input id="100yen" class="money-100" type="number" value="0" th:field="*{changeInfo.oneHundredCoin}" onChange="calcSum()"></td>
+      	<td><input id="500yen" class="money-500" type="number" value="0" th:field="*{changeInfo.fiveHundredCoin}" onChange="calcSum()"></td>
+      	<td><input id="1000yen" class="money-1000" type="number" value="0" th:field="*{changeInfo.oneThousandBill}" onChange="calcSum()"></td>
+      </tr>
+    </table>
+    <br>
+    <div class="flex">
+	    <table border="1" bordercolor="#4169e1" th:each="product : ${productList}">
+	    　　　　<tr>
+		  	<th><img class="image-resize" align="center" th:src="@{/product_pic/{product}.jpg (product=${product.name})}"></th>
+		  </tr>
+		  <tr>
+		  	<td align="center" th:text="${product.name}" class="productname"></td>
+		  </tr>
+		  <tr>
+		    <td align="center" th:text="|${product.price}円|" class="productprice"></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		  	  <button type="submit" name="productId" th:value="${product.id}"  th:if="${product.stockCount} == 0" disabled>品切れ</button>
+		  	  <button type="submit" name="productId" th:value="${product.id}"  th:if="${product.stockCount} != 0">PUSH</button>
+		    </td>
+		  </tr>
+	    </table>
+    </div>
+    <br>
+   	<div>
+		<label for="sumspace" class="sumDisplay">投入金額(円)：</label>
+		<input id="sum" class="sumDisplay" type="text" name="sum" value="0" th:field="*{sumPayment}" readonly>
+	</div>
+    </form>
+    <br>
+      <th:block th:if="${result.result}">
+    	<p th:text="${result.resultMessage}"></p>
+      </th:block>
+      <th:block th:if="!${result.result}">
+    	  <p class="red" th:text="${result.resultMessage}"></p>
+      </th:block>
+    <p th:text="|お釣り: 10円玉 = ${result.returnChange.tenCoin}枚|"></p>
+    <p th:text="|　　　　50円玉 = ${result.returnChange.fiftyCoin}枚|"></p>
+    <p th:text="|　　　　100円玉 = ${result.returnChange.oneHundredCoin}枚|"></p>
+    <p th:text="|　　　　500円玉 = ${result.returnChange.fiveHundredCoin}枚|"></p>
+<script>
+function calcSum() {
+  var elem = document.getElementById('sum');
+  var calc10 = document.getElementById('10yen').value;
+  var calc50 = document.getElementById('50yen').value;
+  var calc100 = document.getElementById('100yen').value;
+  var calc500 = document.getElementById('500yen').value;
+  var calc1000 = document.getElementById('1000yen').value;
+  var sum = calc10 * 10 + calc50 * 50 + calc100 * 100 + calc500 * 500 + calc1000 * 1000;
+  elem.value = sum;
+}
+</script>
+</body>
+</html>

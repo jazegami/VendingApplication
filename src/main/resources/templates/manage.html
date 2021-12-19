@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>top page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<form th:action="@{/updateChange}" th:object="${updateChangeCountForm}" method="post">
+	<table class="money-area">
+      <tr>
+      	<th><label for="name10">10円</label></th>
+      	<th><label for="name50">50円</label></th>
+      	<th><label for="name100">100円</label></th>
+      	<th><label for="name500">500円</label></th>
+      	<th><label for="name1000">1000円</label></th>
+      </tr>
+      <tr>
+      	<td><input id="10yen" class="money-10" type="number" name="tenCoin" th:value="${changeInfo.tenCoin}"></td>
+      	<td><input id="50yen" class="money-50" type="number" name="fiftyCoin" th:value="${changeInfo.fiftyCoin}"></td>
+      	<td><input id="50yen" class="money-100" type="number" name="onehundredCoin" th:value="${changeInfo.onehundredCoin}"></td>
+      	<td><input id="50yen" class="money-500" type="number" name="fivehundredCoin" th:value="${changeInfo.fivehundredCoin}"></td>
+      	<td><input id="50yen" class="money-1000" type="number" name="onethousandBill" th:value="${changeInfo.onethousandBill}"></td>
+      </tr>
+    </table>
+    <button type="submit" name="updateChangeCount">硬貨数更新</button>
+    </form>
+    <br>
+    <form th:action="@{/updateProductCount}" th:object="${updateProductCountForm}" method="post">
+    <table border="1" th:each="product : ${productList}">
+	   		<tr>
+		  		<td width="30%" align="center" th:text="${product.name}" class="productname"></td>
+		  		<td><input type="number" th:attr="name='vendingProduct[' + __${productStat.index}__ + '].stockCount'" th:value="${product.stockCount}"></td>
+		  		<input type="hidden" th:attr="name='vendingProduct[' + __${productStat.index}__ + '].id'" th:value="${product.id}">
+		  	</tr>
+	</table>
+	<button type="submit" name="updateProductCount">商品数更新</button>
+    </form>
+</body>
+</html>
