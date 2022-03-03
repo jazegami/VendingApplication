@@ -1,5 +1,6 @@
 package ajun.webapp.vebnding.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import ajun.webapp.vebnding.entity.TChangeManage;
 import ajun.webapp.vebnding.entity.TVendingProduct;
@@ -20,12 +23,27 @@ import ajun.webapp.vebnding.object.VendingProduct;
 import ajun.webapp.vebnding.result.BuyProductResult;
 import ajun.webapp.vebnding.service.VendingService;
 
-@Controller
+@RestController
 @RequestMapping("/")
 public class VendingController {
 	
 	@Autowired
 	VendingService vendingService;
+	
+	@RequestMapping(value = "/subscribe", method = RequestMethod.GET)
+	public SseEmitter subscribe() {
+		SseEmitter emitter = new SseEmitter();
+		try {
+			vendingService.subscribeService(emitter);
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		
+		return emitter;
+	}
+	
+	
 	
 	// 初期表示の受付処理
 	@RequestMapping(method = RequestMethod.GET)

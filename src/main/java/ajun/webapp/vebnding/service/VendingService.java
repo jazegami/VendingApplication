@@ -1,12 +1,17 @@
 package ajun.webapp.vebnding.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
 
 import ajun.webapp.vebnding.entity.TChangeManage;
 import ajun.webapp.vebnding.entity.TVendingProduct;
@@ -27,6 +32,28 @@ public class VendingService {
 	
 	@Autowired
 	TChangeManageRepository changeRepository;
+	
+	@Async("subscribeSend")
+	public void subscribeService(SseEmitter emitter) throws IOException {
+		while (true) {
+			try {
+				Thread.sleep(10000);
+				SseEventBuilder message = SseEmitter.event()
+						.data("test", MediaType.TEXT_EVENT_STREAM)
+						.name("message")
+						.id("1")
+						.reconnectTime(5);
+				emitter.send(message);
+				System.out.println("メッセージ送信しました");
+			} catch (InterruptedException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
 	
 	// DBから商品情報全量を取得する
 	public List<VendingProduct> getProductList() {
